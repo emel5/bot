@@ -8,6 +8,12 @@ import time
 import asyncio
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
+
+# --- FIX: LOAD ENVIRONMENT VARIABLES ---
+from dotenv import load_dotenv
+load_dotenv()
+# ---------------------------------------
+
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
 from googleapiclient.http import MediaIoBaseDownload
@@ -28,7 +34,7 @@ KEY_FILE_NAME = "service_key.json"
 
 # Check if Token exists
 if not TOKEN:
-    print("❌ Error: BOT_TOKEN environment variable is not set!")
+    print("❌ Error: BOT_TOKEN environment variable is not set! (Check your .env file)")
 
 # --- TRANSLATION DICTIONARY ---
 STRINGS = {
@@ -110,7 +116,6 @@ try:
 
 except Exception as e:
     logging.error(f"❌ Key Error: {e}")
-    # Don't exit immediately, let the bot try to start so we can see logs on Render
     creds = None
 
 # --- MEMORY & CACHE & USERS ---
